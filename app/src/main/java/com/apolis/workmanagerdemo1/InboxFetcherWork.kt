@@ -2,14 +2,16 @@ package com.apolis.workmanagerdemo1
 
 import android.content.Context
 import android.util.Log
+import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import kotlinx.coroutines.delay
 import kotlin.math.log
 
-class InboxFetcherWork(context: Context, params: WorkerParameters): Worker(context, params) {
+class InboxFetcherWork(context: Context, params: WorkerParameters): CoroutineWorker(context, params) {
 
-    override fun doWork(): Result {
+    override suspend fun doWork(): Result {
         // user id as input data to this doMethod
         val userId = inputData.getInt("user_id", -1)
         if(userId == -1) {
@@ -21,12 +23,12 @@ class InboxFetcherWork(context: Context, params: WorkerParameters): Worker(conte
         }
 
         for(i in 1..10) {
-            Thread.sleep(1000)
+            delay(1000)
             val progressData = Data.Builder()
                 .putInt("total_messages", 10)
                 .putInt("messages_loaded", i)
                 .build()
-            setProgressAsync(progressData)
+            setProgress(progressData)
         }
 
         val data = Data.Builder()

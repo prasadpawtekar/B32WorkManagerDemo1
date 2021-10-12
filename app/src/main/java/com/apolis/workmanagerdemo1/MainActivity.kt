@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
-            .setRequiresCharging(true)
             .build()
 
         val inboxWorkRequest = OneTimeWorkRequestBuilder<InboxFetcherWork>()
@@ -69,7 +68,6 @@ class MainActivity : AppCompatActivity() {
                     if(totalMessages != -1 && messages_loaded != -1) {
                         tvMsg.setText("$messages_loaded / $totalMessages loaded")
                     }
-
                 }
                 else -> {
 
